@@ -1,0 +1,76 @@
+\documentclass[12pt]{article}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage{textcomp}
+
+\setlength{\topmargin}{-0.50in}
+\setlength{\textheight}{10.0in}
+\setlength{\oddsidemargin}{-0.50in}
+\setlength{\evensidemargin}{-0.75in}
+\setlength{\textwidth}{7.5in}
+\setlength{\parindent}{0in}
+
+\newcounter{tick}\setcounter{tick}{1}
+\newcounter{numticks}
+\newcounter{xpos}\newcounter{ypos}
+\newcounter{tickx}\newcounter{ticky}
+\newcounter{xoffset}\setcounter{xoffset}{-4}
+\newcounter{yoffset}\setcounter{yoffset}{-2}
+\newcommand{\circlenum}[4]{%
+	\setcounter{xpos}{#1}
+	\setcounter{ypos}{#2}
+	\setcounter{tick}{#3}
+	\setcounter{numticks}{0}
+	\whiledo{\value{numticks}<#4}{%
+		\setcounter{tickx}{\value{xpos} + \value{xoffset}}
+		\setcounter{ticky}{\value{ypos} + \value{yoffset}}
+		\put(\value{xpos}, \value{ypos}){\circle{9}}
+		\put(\value{tickx}, \value{ticky}){\makebox[1em]{\thetick}}
+		\addtocounter{xpos}{11}
+		\addtocounter{tick}{1}
+		\addtocounter{numticks}{1}
+	}
+}
+
+\newcommand{\custsep}{\rule{18.60cm}{.1mm}\vspace{.5mm}}
+\newcommand{\smallcustsep}{\rule{9.10cm}{.1mm}\vspace{.5mm}}
+\newcommand{\customer}[2]{%
+	\begin{picture}(400,14)
+	\put(0,7){\normalsize #2}
+	\put(0,-2){\normalsize #1}
+	%\put(48,08){Beer}
+	\circlenum{95}{10}{0}{40}
+	\circlenum{95}{0}{40}{40}
+	\end{picture}\par
+	\custsep\par
+}
+	
+\begin{document}
+\pagestyle{empty}
+
+\begin{center}
+{\huge Espresso Consumption}
+\end{center}
+
+New here?  Please write your name on a new line.
+
+When you make yourself an espresso, mark off a bubble.
+
+If you pre-pay, highlight or outline up to the number of espresso shots
+you have pre-paid.
+
+$25$\textcent\ per espresso shot.
+
+Relax, people, it's not a race!  Or is it?
+\vspace{5mm}
+
+\tiny
+\custsep\par
+\newcounter{ncust}
+\whiledo{\value{ncust}<25}{%
+  \customer{}{}
+  \addtocounter{ncust}{1}
+}
+
+
+\end{document}
