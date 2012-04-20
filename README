@@ -4,14 +4,20 @@ bubblesheet
 LaTeX code to make bubble sheets (good for coffee pools, communal
 beer, etc).  This code was handed down through generations of grad
 students at the University of British Columbia.  Lore has it that the
-Great Brodsky Brothers are its original authors.
+Great Brodsky Brothers are its original authors.  There is rumored to
+be a billing script that goes along with this, and indeed I have some
+hazy memories of running said script, attempting to collect money from
+my delinquent colleagues, breaking kneecaps, and hauling wagonloads of
+pennies to the bank.  Or maybe I just checked off one too many bubbles
+on the beer sheet.
 
+Typical use:
 
-Usage:
-
-  pdflatex espresso.tex
-  open espresso.pdf
+  edit espresso.tex for your organization
+  >> pdflatex espresso.tex
+  print espresso.pdf
 
 
 Enjoy.
 --dstn
+

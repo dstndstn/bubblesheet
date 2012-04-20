@@ -3,7 +3,7 @@
 \usepackage{ifthen}
 \usepackage{textcomp}
 
-\setlength{\topmargin}{-0.50in}
+\setlength{\topmargin}{-1in}
 \setlength{\textheight}{10.0in}
 \setlength{\oddsidemargin}{-0.50in}
 \setlength{\evensidemargin}{-0.75in}
@@ -14,8 +14,14 @@
 \newcounter{numticks}
 \newcounter{xpos}\newcounter{ypos}
 \newcounter{tickx}\newcounter{ticky}
+% How to position the text relative to the circle
+% when drawing a bubble.
 \newcounter{xoffset}\setcounter{xoffset}{-4}
 \newcounter{yoffset}\setcounter{yoffset}{-2}
+
+% Draw a row of bubbles containing numbers
+%    (0) (1) (2) (3) (4) ...
+% \circlenum{x position}{y position}{starting bubble number}{# bubbles}
 \newcommand{\circlenum}[4]{%
 	\setcounter{xpos}{#1}
 	\setcounter{ypos}{#2}
@@ -24,6 +30,7 @@
 	\whiledo{\value{numticks}<#4}{%
 		\setcounter{tickx}{\value{xpos} + \value{xoffset}}
 		\setcounter{ticky}{\value{ypos} + \value{yoffset}}
+        % MAGIC NUMBER Circle diameter = 9
 		\put(\value{xpos}, \value{ypos}){\circle{9}}
 		\put(\value{tickx}, \value{ticky}){\makebox[1em]{\thetick}}
 		\addtocounter{xpos}{11}
@@ -34,11 +41,17 @@
 
 \newcommand{\custsep}{\rule{18.60cm}{.1mm}\vspace{.5mm}}
 \newcommand{\smallcustsep}{\rule{9.10cm}{.1mm}\vspace{.5mm}}
+% Add a customer: write the customer's name and two rows of bubbles.
+% Fiddle the numbers to your taste.
+% \customer{firstname}{lastname}
 \newcommand{\customer}[2]{%
 	\begin{picture}(400,14)
 	\put(0,7){\normalsize #2}
 	\put(0,-2){\normalsize #1}
-	%\put(48,08){Beer}
+    % If you have multiple products (single shots / double shots /
+    % juice / snacks), you can label the rows like so:
+	%\put(48,7){Beer}
+	%\put(48,-2){Snack}
 	\circlenum{95}{10}{0}{40}
 	\circlenum{95}{0}{40}{40}
 	\end{picture}\par
