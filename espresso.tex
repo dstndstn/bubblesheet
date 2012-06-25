@@ -2,6 +2,9 @@
 \usepackage{calc}
 \usepackage{ifthen}
 \usepackage{textcomp}
+\usepackage{color}
+
+\definecolor{bg}{rgb}{0.7,0.7,0.7}
 
 \setlength{\topmargin}{-1in}
 \setlength{\textheight}{10.0in}
@@ -39,6 +42,38 @@
 	}
 }
 
+\newcommand{\filledcircles}[6]{%
+	\setcounter{xpos}{#1}
+	\setcounter{ypos}{#2}
+	\setcounter{tick}{#3}
+	\setcounter{numticks}{0}
+	\whiledo{\value{numticks}<#4}{%
+		\setcounter{tickx}{\value{xpos} + \value{xoffset}}
+		\setcounter{ticky}{\value{ypos} + \value{yoffset}}
+        % MAGIC NUMBER Circle diameter = 9
+        % < # paid?
+        \ifthenelse{\value{tick}<#6}{%
+          % highlight background
+		  %\put(\value{xpos}, \value{ypos}){\color{bg}\rule{9pt}{9pt}}%
+          % filled gray
+		  \put(\value{xpos}, \value{ypos}){\color{bg}\circle*{9}}%
+        }{}
+        % < # bought?
+        \ifthenelse{\value{tick}<#5}{%
+          % filled
+		  \put(\value{xpos}, \value{ypos}){\circle*{9}}%
+        }{%
+		  \put(\value{xpos}, \value{ypos}){\circle{9}}%
+        }
+		%\put(\value{xpos}, \value{ypos}){\circle{9}}
+		\put(\value{tickx}, \value{ticky}){\makebox[1em]{\thetick}}
+		\addtocounter{xpos}{11}
+		\addtocounter{tick}{1}
+		\addtocounter{numticks}{1}
+	}
+}
+
+
 \newcommand{\custsep}{\rule{18.60cm}{.1mm}\vspace{.5mm}}
 \newcommand{\smallcustsep}{\rule{9.10cm}{.1mm}\vspace{.5mm}}
 % Add a customer: write the customer's name and two rows of bubbles.
@@ -57,6 +92,21 @@
 	\end{picture}\par
 	\custsep\par
 }
+
+\newcommand{\customerf}[3]{%
+	\begin{picture}(400,14)
+	  %\put(0,7){\normalsize #2}
+	  \put(0,-2){\normalsize #1}
+    % If you have multiple products (single shots / double shots /
+    % juice / snacks), you can label the rows like so:
+	%\put(48,7){Beer}
+	%\put(48,-2){Snack}
+	  \filledcircles{95}{10}{0}{40}{#2}{#3}
+	  \filledcircles{95}{0}{40}{40}{#2}{#3}
+	\end{picture}\par
+	\custsep\par
+}
+
 	
 \begin{document}
 \pagestyle{empty}
@@ -79,6 +129,7 @@ Relax, people, it's not a race!  Or is it?
 
 \tiny
 \custsep\par
+\customerf{Kendrick}{28}{42}
 \newcounter{ncust}
 \whiledo{\value{ncust}<25}{%
   \customer{}{}
